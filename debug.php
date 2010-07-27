@@ -2,7 +2,7 @@
 
 function debug ($val)
 {
-	print "[debug] $val<BR>\n";
+	print "[debug] :<strong>$val</strong><BR>\n";
 }
 
 ?>
