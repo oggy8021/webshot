@@ -2,7 +2,7 @@
 
 function debug ($val)
 {
-	print "[debug] :<strong>$val</strong><BR>\n";
+	print "<BR><FONT COLOR=\"red\">[debug] :</FONT><strong>$val</strong><BR>\n";
 }
 
 ?>
