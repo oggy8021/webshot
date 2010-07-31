@@ -30,11 +30,16 @@ function webshot ($url)
 
 	} else {
 		//url部をチェックする
-		//if (db.search($md5url)
-			//urlに対応する画像がある
-		
+		if (! SearchUrlMatchedGraph($md5url))
+		{
+			$ret = InsertShotTab($md5url, $url);
 			//urlに対応する画像が無い
 			print "<img src=\"./nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\"><HR><BR>";
+
+		} else {
+			//urlに対応する画像がある
+
+		}
 
 	}
 }
