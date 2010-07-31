@@ -1,4 +1,4 @@
-<?php 
+ï»¿<?php 
 
 // webshot
 
@@ -13,31 +13,31 @@ function webshot ($url)
 	$md5url = md5($url);
 	debug($md5url);
 
-	//db‚ª‘¶Ý‚·‚é‚©ƒ`ƒFƒbƒN
+	//dbãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	if (! ConnectShotDb() )
 	{
-		//db‚ª‘¶Ý‚µ‚È‚¢
-		//db‚ðì‚é
+		//dbãŒå­˜åœ¨ã—ãªã„
+		//dbã‚’ä½œã‚‹
 		//create_db
 		debug ("Nothing ShotDb");
 		return FALSE;
 
 	}
 
-	//table‚ª‘¶Ý‚·‚é‚©ƒ`ƒFƒbƒN
+	//tableãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	if (! EnableShotTab() )
 	{
-		//table‚ª‘¶Ý‚µ‚È‚¢
-		//table‚ðì‚é
+		//tableãŒå­˜åœ¨ã—ãªã„
+		//tableã‚’ä½œã‚‹
 		//create_table
 		debug ("Nothing ShotTab");
 		return FALSE;
 
 	} else {
-		//url•”‚ðƒ`ƒFƒbƒN‚·‚é
+		//urléƒ¨ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 		if (! SearchUrlMatchedGraph($md5url))
 		{
-			//url‚É‘Î‰ž‚·‚é‰æ‘œ‚ª–³‚¢
+			//urlã«å¯¾å¿œã™ã‚‹ç”»åƒãŒç„¡ã„
 			$ret = InsertShotTab($md5url, $url);
 			if (! $ret)
 			{
@@ -48,8 +48,8 @@ function webshot ($url)
 			}
 
 		} else {
-			//url‚É‘Î‰ž‚·‚é‰æ‘œ‚ª‚ ‚é
-
+			//urlã«å¯¾å¿œã™ã‚‹ç”»åƒãŒã‚ã‚‹
+			;
 		}
 
 	}
