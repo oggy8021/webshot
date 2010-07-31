@@ -19,7 +19,7 @@ function webshot ($url)
 		//db‚ª‘¶Ý‚µ‚È‚¢
 		//db‚ðì‚é
 		//create_db
-		debug ("Failed ConnectShotDb");
+		debug ("Nothing ShotDb");
 		return FALSE;
 
 	}
@@ -30,7 +30,7 @@ function webshot ($url)
 		//table‚ª‘¶Ý‚µ‚È‚¢
 		//table‚ðì‚é
 		//create_table
-		debug ("Failed EnableShotDb");
+		debug ("Nothing ShotTab");
 		return FALSE;
 
 	} else {
@@ -53,6 +53,8 @@ function webshot ($url)
 		}
 
 	}
+	
+	CloseShotDb;
 }
 
 ?>
