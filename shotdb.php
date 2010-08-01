@@ -44,7 +44,7 @@ function EnableShotTab() {
 
 }//EnableShotTab
 
-function SearchShotTab($md5, &$rec) {
+function SearchShotTabFromMd5($md5, &$rec) {
 	global $con;
 
 	$result = mysql_query("SELECT md5, flag, ins_date, shot_date, url FROM shottab WHERE md5 = '$md5'", $con);
@@ -62,7 +62,43 @@ function SearchShotTab($md5, &$rec) {
 		return TRUE;
 	}
 	
-}//SearchUrlMatchedGraph
+}//SearchShotDbFromMd5
+
+
+function SearchShotTabGetFlag() {
+	global $con;
+
+	$result = mysql_query("SELECT md5, flag, ins_date, shot_date, url FROM shottab WHERE flag = 0 ORDER BY ins_date", $con);
+	if (! $result)
+	{
+		DumpError(__FUNCTION__);
+		return FALSE;
+	} else {
+		$rowcnt = mysql_num_rows($result);
+
+		//resultsetèâä˙âª
+		$cnt = 0;
+		while ($cnt < $rowcnt)
+		{
+			$resultset[$cnt] = array("md5" => "", "flag" => 0, "ins_date" => 0, "shot_date" => 0, "url" => "");
+			$cnt++;
+		}
+
+		//fetch
+		$cnt = 0;
+		while ($row = mysql_fetch_assoc($result))
+		{
+			$resultset["$cnt"]["md5"] = $row["md5"];
+			$resultset["$cnt"]["flag"] = $row["flag"];
+			$resultset["$cnt"]["ins_date"] = $row["ins_date"];
+			$resultset["$cnt"]["shot_date"] = $row["shot_date"];
+			$resultset["$cnt"]["url"] = $row["url"];
+			$cnt++;
+		}
+		return $resultset;
+	}
+	
+}//SearchShotTabGetFlag
 
 
 function InsertShotTab($md5, $url) {
