@@ -11,4 +11,11 @@ if (! ConnectShotDb())
 	print "TRUE\n";
 }
 
+if (! EnableShotTab())
+{
+	print "FALSE\n";
+} else {
+	print "TRUE\n";
+}
+
 ?>
