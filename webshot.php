@@ -11,7 +11,7 @@ function webshot ($url)
 
 	debug($url);
 	$md5url = md5($url);
-	debug($md5url);
+//	debug($md5url);
 
 	//dbが存在するかチェック
 	if (! ConnectShotDb() )
@@ -37,7 +37,7 @@ function webshot ($url)
 
 		$rec = array("flag" => 0, "ins_date" => 0, "shot_date" => 0, "url" => "");
 
-		$ret = SearchShotTab($md5url, $rec);
+		$ret = SearchShotTabFromMd5($md5url, $rec);
 		if (! $ret)
 		{
 			//urlに対応するレコードがない
@@ -53,7 +53,7 @@ function webshot ($url)
 		if (! $rec["flag"])
 		{
 			//urlに対応する画像が無い
-			print "<img src=\"./nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\"><HR><BR>";
+			print "<img src=\"./nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\"><BR>";
 		} else {
 			//urlに対応する画像がある
 			printf ("<img src=\"./%s.png\" ALT=\"%s\" TITLE=\"%s\"><HR><BR>", $md5url, $md5url, $md5url);
