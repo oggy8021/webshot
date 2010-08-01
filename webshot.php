@@ -34,24 +34,30 @@ function webshot ($url)
 		return FALSE;
 
 	} else {
-		//url部をチェックする
-		if (! SearchUrlMatchedGraph($md5url))
+
+		$rec = array("flag" => 0, "ins_date" => 0, "shot_date" => 0, "url" => "");
+
+		$ret = SearchShotTab($md5url, $rec);
+		if (! $ret)
 		{
-			//urlに対応する画像が無い
+			//urlに対応するレコードがない
 			$ret = InsertShotTab($md5url, $url);
 			if (! $ret)
 			{
 				debug("Failed InsertShotTab");
-			} else {
-				debug("Matched Record");
-				print "<img src=\"./nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\"><HR><BR>";
+				return FALSE;
 			}
+		} 
 
+		//urlに対応するレコードがあった
+		if (! $rec["flag"])
+		{
+			//urlに対応する画像が無い
+			print "<img src=\"./nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\"><HR><BR>";
 		} else {
 			//urlに対応する画像がある
-			;
+			printf ("<img src=\"./%s.png\" ALT=\"%s\" TITLE=\"%s\"><HR><BR>", $md5url, $md5url, $md5url);
 		}
-
 	}
 	
 	CloseShotDb;
