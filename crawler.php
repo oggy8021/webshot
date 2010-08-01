@@ -31,8 +31,10 @@ if (! EnableShotTab() )
 
 	$resultset = SearchShotTabGetFlag();
 
-//	foreach ($resutset as $cnt
-
+	foreach ($resultset as $row => $rec)
+	{
+		print $rec["md5"] . $rec["flag"] . $rec["ins_date"] . $rec["shot_date"] . $rec["url"] . "\n";
+	}
 }
 
 CloseShotDb();
