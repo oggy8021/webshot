@@ -9,9 +9,9 @@ function webshot ($url)
 {
 	$ret = null;
 
-	debug($url);
+	debugHtml($url);
 	$md5url = md5($url);
-//	debug($md5url);
+//	debugHtml($md5url);
 
 	//dbが存在するかチェック
 	if (! ConnectShotDb() )
@@ -19,7 +19,7 @@ function webshot ($url)
 		//dbが存在しない
 		//dbを作る
 		//create_db
-		debug ("Nothing ShotDb");
+		debugHtml ("Nothing ShotDb");
 		return FALSE;
 
 	}
@@ -30,7 +30,7 @@ function webshot ($url)
 		//tableが存在しない
 		//tableを作る
 		//create_table
-		debug ("Nothing ShotTab");
+		debugHtml ("Nothing ShotTab");
 		return FALSE;
 
 	} else {
@@ -44,7 +44,7 @@ function webshot ($url)
 			$ret = InsertShotTab($md5url, $url);
 			if (! $ret)
 			{
-				debug("Failed InsertShotTab");
+				debugHtml("Failed InsertShotTab");
 				return FALSE;
 			}
 		} 
