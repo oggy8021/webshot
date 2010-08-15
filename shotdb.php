@@ -78,24 +78,30 @@ function SearchShotTabGetFlag() {
 
 		//resultsetèâä˙âª
 		$cnt = 0;
-		while ($cnt < $rowcnt)
+		if ($cnt > 0)
 		{
-			$resultset[$cnt] = array("md5" => "", "flag" => 0, "ins_date" => 0, "shot_date" => 0, "url" => "");
-			$cnt++;
-		}
+			while ($cnt < $rowcnt)
+			{
+				$resultset[$cnt] = array("md5" => "", "flag" => 0, "ins_date" => 0, "shot_date" => 0, "url" => "");
+				$cnt++;
+			}
 
-		//fetch
-		$cnt = 0;
-		while ($row = mysql_fetch_assoc($result))
-		{
-			$resultset["$cnt"]["md5"] = $row["md5"];
-			$resultset["$cnt"]["flag"] = $row["flag"];
-			$resultset["$cnt"]["ins_date"] = $row["ins_date"];
-			$resultset["$cnt"]["shot_date"] = $row["shot_date"];
-			$resultset["$cnt"]["url"] = $row["url"];
-			$cnt++;
+			//fetch
+			$cnt = 0;
+			while ($row = mysql_fetch_assoc($result))
+			{
+				$resultset["$cnt"]["md5"] = $row["md5"];
+				$resultset["$cnt"]["flag"] = $row["flag"];
+				$resultset["$cnt"]["ins_date"] = $row["ins_date"];
+				$resultset["$cnt"]["shot_date"] = $row["shot_date"];
+				$resultset["$cnt"]["url"] = $row["url"];
+				$cnt++;
+			}
+			return $resultset;
+		} else {
+			DumpError($cnt);
+			return 0;
 		}
-		return $resultset;
 	}
 	
 }//SearchShotTabGetFlag
@@ -105,9 +111,8 @@ function InsertShotTab($md5, $url) {
 	global $con;
 
 	$flag = 0;	//ñ¢éÊìæ
-	$ins_date = time();
 
-	$result = mysql_query("INSERT INTO shottab(md5, flag, ins_date, url) VALUES ('$md5', $flag, $ins_date, '$url' )", $con);
+	$result = mysql_query("INSERT INTO shottab(md5, flag, ins_date, url) VALUES ('$md5', $flag, now(), '$url' )", $con);
 	if (! $result)
 	{
 		DumpError(__FUNCTION__);
@@ -117,6 +122,31 @@ function InsertShotTab($md5, $url) {
 	}
 	
 }//InsertShotTab
+
+
+function UpdateShotTab($md5) {
+	global $con;
+
+	$result = mysql_query("BEGIN", $con);
+
+	$result = mysql_query("update shottab set flag = 1 where md5 = '$md5'", $con);
+	if (! $result)
+	{
+		DumpError(__FUNCTION__);
+		return FALSE;
+	}
+
+	$result = mysql_query("update shottab set shot_date = now() where md5 = '$md5'", $con);
+	if (! $result)
+	{
+		DumpError(__FUNCTION__);
+		return FALSE;
+	} else {
+		$result = mysql_query("END", $con);
+		return TRUE;
+	}
+	
+}//UpdateShotTab
 
 
 function CloseShotDb() {
