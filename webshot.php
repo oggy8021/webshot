@@ -8,8 +8,9 @@ require 'shotdb.php';
 function webshot ($url) 
 {
 	$ret = null;
+	$cachedir = 'http://oggy.no-ip.info/image/webshot';
 
-	debugHtml($url);
+//	debugHtml($url);
 	$md5url = md5($url);
 //	debugHtml($md5url);
 
@@ -53,10 +54,10 @@ function webshot ($url)
 		if (! $rec["flag"])
 		{
 			//urlに対応する画像が無い
-			print "<img src=\"./nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\"><BR>";
+			printf ("<img src=\"%s/nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\"><BR>", $cachedir);
 		} else {
 			//urlに対応する画像がある
-			printf ("<img src=\"./%s.png\" ALT=\"%s\" TITLE=\"%s\"><HR><BR>", $md5url, $md5url, $md5url);
+			printf ("<img src=\"%s/%s.png\" ALT=\"%s\" TITLE=\"%s\"><BR>", $cachedir, $md5url, $md5url, $md5url);
 		}
 	}
 	
