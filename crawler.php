@@ -3,7 +3,7 @@
 //crawler.php
 // TODO:
 //	古いスナップショットを再取得する
-//	SearchShotTabGetFlag()に、日付も条件として足せば良い
+//	環境変数チェック
 
 require 'debug.php';
 require 'shotdb.php';
@@ -17,7 +17,7 @@ $cachedir = '/var/www/html/image/webshot';
 $ret = null;
 
 //dbが存在するかチェック
-if (! ConnectShotDb() )
+if (FALSE === ConnectShotDb() )
 {
 	//dbが存在しない
 	//dbを作る
@@ -28,7 +28,7 @@ if (! ConnectShotDb() )
 }
 
 //tableが存在するかチェック
-if (! EnableShotTab() )
+if (FALSE === EnableShotTab() )
 {
 	//tableが存在しない
 	//tableを作る
@@ -41,24 +41,26 @@ if (! EnableShotTab() )
 	//仮想画面でFirefoxを起動する
 	$cmd = '/bin/ps -ef | grep "/usr/lib/firefox" | grep "display :5" | grep -v "grep" | grep -v "/bin/sh" | wc -l';
 	$lastcon = exec($cmd, $ret);
-	debugCon($cmd);
-	debugCon($lastcon);
-	if (! $lastcon)
+//	debugCon($cmd);
+//	debugCon($lastcon);
+	if (0 === $lastcon)
 	{
 		$cmd = $firefox . ' -UILocale ja -display ' . $display . ' -width 800 -height 600 -p "' . $profile . '" >/dev/null &';
 		passthru($cmd, $ret);
 		debugCon("Starting ... Firefox");
 		sleep(15);
-		if ($ret)
+		if (FALSE === $ret)
 		{
 			debugCon("Failed Running Firefox (ret = $ret)");
 			return FALSE;
 		}
 	}
+	debugCon('Firefox is already running');
 
 	$resultset = SearchShotTabGetFlag();
-	if ($resultset > 0)
+	if (0 < $resultset)
 	{
+		debugCon('Starting ... crawler');
 		foreach ($resultset as $row => $rec)
 		{
 			//print $rec["md5"] . $rec["flag"] . $rec["ins_date"] . $rec["shot_date"] . $rec["url"] . "\n";
@@ -66,7 +68,7 @@ if (! EnableShotTab() )
 			//対象のURLにアクセスする
 			$cmd = $firefox .' -display ' . $display . ' -remote "openurl(' . $rec["url"] . ')" >/dev/null &';
 			$lastcon = exec($cmd, $ret);
-			if ($ret)
+			if (FALSE === $ret)
 			{
 				debugCon('Failed Open Url (url = ' . $rec["url"] . ')');
 			} else {
@@ -78,10 +80,11 @@ if (! EnableShotTab() )
 			$imgpath = $cachedir . '/' . $rec["md5"] . '.png';
 			$cmd = $import .' -display ' . $display . ' -window root ' . $imgpath;
 			$lastcon = exec($cmd, $ret);
-			if ($ret)
+			if (FALSE === $ret)
 			{
 				debugCon('Failed Snapshot (url = ' . $rec["url"] . ')');
 			}
+			debugCon("Success ... Snapshot");
 
 			//撮った画像を加工（縮小/角○/影）する
 			$shotimg = new Imagick();
@@ -96,11 +99,15 @@ if (! EnableShotTab() )
 
 			$shotimg->destroy();
 			$shadow->destroy();
+			debugCon("Success ... Image Convert");
 
 			//shotdb更新
-			if (! UpdateShotTab($rec["md5"]) ) {
-				debugCon ('Failed Update ShotDb');
+			if (FALSE === UpdateShotTab($rec["md5"]) )
+			{
+				debugCon ('Failed to update ShotTab');
 				return FALSE;
+			} else {
+				debugCon("Success to update ... ShotTab");
 			}
 
 			//about:blank
@@ -110,6 +117,8 @@ if (! EnableShotTab() )
 			sleep(5);
 
 		}
+	} else {
+		debugCon('No need ... crawler');
 	}
 	return TRUE;
 }

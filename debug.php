@@ -7,7 +7,7 @@ function debugHtml ($val)
 
 function debugCon ($val)
 {
-	print "[debug] :$val\n";
+	print "[debug] :$val.\n";
 }
 
 ?>

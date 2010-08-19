@@ -23,7 +23,7 @@ function webshot ($url)
 //	debugHtml($md5url);
 
 	//dbが存在するかチェック
-	if (! ConnectShotDb() )
+	if (FALSE === ConnectShotDb() )
 	{
 		//dbが存在しない
 		//dbを作る
@@ -34,7 +34,7 @@ function webshot ($url)
 	}
 
 	//tableが存在するかチェック
-	if (! EnableShotTab() )
+	if (FALSE === EnableShotTab() )
 	{
 		//tableが存在しない
 		//tableを作る
@@ -46,14 +46,14 @@ function webshot ($url)
 
 		$rec = array("flag" => 0, "ins_date" => 0, "shot_date" => 0, "url" => "");
 
-		$ret = SearchShotTabFromMd5($md5url, $rec);
+		$cnt = SearchShotTabFromMd5($md5url, $rec);
 //		debugHtml($ret);
-		if (! $ret)
+		if (0 === $cnt)
 		{
 //			debugHtml($url);
 			//urlに対応するレコードがない
 			$ret = InsertShotTab($md5url, $url);
-			if (! $ret)
+			if (FALSE === $ret)
 			{
 				debugHtml("Failed InsertShotTab");
 				return FALSE;
@@ -61,7 +61,7 @@ function webshot ($url)
 		} 
 
 		//urlに対応するレコードがあった
-		if (! $rec["flag"])
+		if (0 === $rec["flag"])
 		{
 			//urlに対応する画像が無い
 			printf ("<img src=\"%s/nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\" /><BR>\n", $cachedir);

@@ -17,7 +17,7 @@ function ConnectShotDb() {
 	// TODO
 	//   wordpressÝ’èƒtƒ@ƒCƒ‹‚É‚ ‚é‚Ì‚Æ“¯‚¶
 	$con = mysql_connect ($hostname, $dbuser, $db_ident);
-	if (! $con)
+	if (FALSE === $con)
 	{
 		DumpError(__FUNCTION__);
 		return FALSE;
@@ -33,8 +33,8 @@ function EnableShotTab() {
 
 	$dbname = 'shotdb';
 
-	mysql_select_db ($dbname, $con);
-	if (! $con)
+	$ret = mysql_select_db ($dbname, $con);
+	if (FALSE === $ret)
 	{
 		DumpError(__FUNCTION__);
 		return FALSE;
@@ -48,13 +48,10 @@ function SearchShotTabFromMd5($md5, &$rec) {
 	global $con;
 
 	$result = mysql_query("SELECT md5, flag, ins_date, shot_date, url FROM shottab WHERE md5 = '$md5'", $con);
-	if (! $result)
+	if ("mysql result" === get_resource_type($result) )
 	{
-		DumpError(__FUNCTION__);
-		return FALSE;
-	} else {
 		$rowcnt = mysql_num_rows($result);
-		if (! $rowcnt)
+		if (0 === $rowcnt)
 		{
 			return $rowcnt;
 		} else {
@@ -64,8 +61,13 @@ function SearchShotTabFromMd5($md5, &$rec) {
 			$rec["ins_date"] = $row["ins_date"];
 			$rec["shot_date"] = $row["shot_date"];
 			$rec["url"] = $row["url"];
-			return TRUE;
+			return $rowcnt;
 		}
+
+	} else {
+		DumpError(__FUNCTION__);
+		return FALSE;
+
 	}
 	
 }//SearchShotDbFromMd5
@@ -75,39 +77,40 @@ function SearchShotTabGetFlag() {
 	global $con;
 
 	$result = mysql_query("SELECT md5, flag, ins_date, shot_date, url FROM shottab WHERE flag = 0 ORDER BY ins_date", $con);
-	if (! $result)
+	if ("mysql result" == get_resource_type($result) )
 	{
-		DumpError(__FUNCTION__);
-		return FALSE;
-	} else {
 		$rowcnt = mysql_num_rows($result);
 
 		//resultset‰Šú‰»
-		$cnt = 0;
-		if ($cnt > 0)
+		if (0 === $rowcnt)
 		{
+			return 0;
+		} else {
+			$cnt = 0;
 			while ($cnt < $rowcnt)
 			{
 				$resultset[$cnt] = array("md5" => "", "flag" => 0, "ins_date" => 0, "shot_date" => 0, "url" => "");
 				$cnt++;
 			}
-
-			//fetch
-			$cnt = 0;
-			while ($row = mysql_fetch_assoc($result))
-			{
-				$resultset["$cnt"]["md5"] = $row["md5"];
-				$resultset["$cnt"]["flag"] = $row["flag"];
-				$resultset["$cnt"]["ins_date"] = $row["ins_date"];
-				$resultset["$cnt"]["shot_date"] = $row["shot_date"];
-				$resultset["$cnt"]["url"] = $row["url"];
-				$cnt++;
-			}
-			return $resultset;
-		} else {
-			DumpError($cnt);
-			return 0;
 		}
+
+		//fetch
+		$cnt = 0;
+		while ($row = mysql_fetch_assoc($result) )
+		{
+			$resultset["$cnt"]["md5"] = $row["md5"];
+			$resultset["$cnt"]["flag"] = $row["flag"];
+			$resultset["$cnt"]["ins_date"] = $row["ins_date"];
+			$resultset["$cnt"]["shot_date"] = $row["shot_date"];
+			$resultset["$cnt"]["url"] = $row["url"];
+			$cnt++;
+		}
+		return $resultset;
+ 
+	} else {
+		DumpError(__FUNCTION__);
+		return FALSE;
+
 	}
 	
 }//SearchShotTabGetFlag
@@ -119,7 +122,7 @@ function InsertShotTab($md5, $url) {
 	$flag = 0;	//–¢Žæ“¾
 
 	$result = mysql_query("INSERT INTO shottab(md5, flag, ins_date, url) VALUES ('$md5', $flag, now(), '$url' )", $con);
-	if (! $result)
+	if (FALSE === $result)
 	{
 		DumpError(__FUNCTION__);
 		return FALSE;
@@ -136,14 +139,14 @@ function UpdateShotTab($md5) {
 	$result = mysql_query("BEGIN", $con);
 
 	$result = mysql_query("update shottab set flag = 1 where md5 = '$md5'", $con);
-	if (! $result)
+	if (FALSE === $result)
 	{
 		DumpError(__FUNCTION__);
 		return FALSE;
 	}
 
 	$result = mysql_query("update shottab set shot_date = now() where md5 = '$md5'", $con);
-	if (! $result)
+	if (FALSE === $result)
 	{
 		DumpError(__FUNCTION__);
 		return FALSE;
@@ -164,8 +167,7 @@ function CloseShotDb() {
 
 function DumpError($func) {
 	global $con;
-
-	print $func . mysql_errno($con) . ": " . mysql_error($con);
+	print "[mysql]: function=(" . $func . ") errno=(" . mysql_errno($con) . ") errmsg=(" . mysql_error($con). ")\n";
 
 }//DumpError
 
