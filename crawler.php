@@ -16,6 +16,12 @@ $cachedir = '/var/www/html/image/webshot';
 
 $ret = null;
 
+if ("" === getenv('DISPLAY') )
+{
+	putenv("DISPLAY=$display.0");
+	debugCon("Setting ENV{DISPLAY} = " . getenv('DISPLAY'));
+}
+
 //dbが存在するかチェック
 if (FALSE === ConnectShotDb() )
 {
