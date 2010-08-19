@@ -12,10 +12,11 @@
 require 'debug.php';
 require 'shotdb.php';
 
-function webshot ($url) 
+function webXshot ($url) 
 {
 	$ret = null;
-	$cachedir = 'http://oggy.no-ip.info/image/webshot';
+	$apdir = 'http://oggy.no-ip.info/blog/wp-content/plugins/webXshot';
+	$cachedir = 'http://oggy.no-ip.info/blog/wp-content/plugins/webXshot/cache';
 
 	//入力値チェック
 	$url = str_replace("\0", "", $url);
@@ -71,10 +72,10 @@ function webshot ($url)
 		if (0 === $rec["flag"])
 		{
 			//urlに対応する画像が無い
-			printf ("<img src=\"%s/nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\" /><BR>\n", $cachedir);
+			printf ("<img src=\"%s/nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\" /><BR>\n", $apdir);
 		} else {
 			//urlに対応する画像がある
-			printf ("<img src=\"%s/%s.png\" ALT=\"%s\" TITLE=\"%s\" /><BR>\n", $cachedir, $md5url, $md5url, $md5url);
+			printf ("<img src=\"%s/%s.png\" ALT=\"%s\" TITLE=\"%s\" /><BR>\n", $cachedir, $md5url,  $rec["url"],  $rec["url"]);
 		}
 	}
 	

@@ -12,7 +12,7 @@ $display = ':5';
 $profile = 'webshot';
 $firefox = '/usr/bin/firefox';
 $import = '/usr/bin/import';
-$cachedir = '/var/www/html/image/webshot';
+$cachedir = '/var/www/html/blog/wp-content/plugins/webXshot/cache';
 
 $ret = null;
 
