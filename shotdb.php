@@ -53,13 +53,19 @@ function SearchShotTabFromMd5($md5, &$rec) {
 		DumpError(__FUNCTION__);
 		return FALSE;
 	} else {
-		//MD5衝突しない前提で、1行
-		$row = mysql_fetch_assoc($result);
-		$rec["flag"] = $row["flag"];
-		$rec["ins_date"] = $row["ins_date"];
-		$rec["shot_date"] = $row["shot_date"];
-		$rec["url"] = $row["url"];
-		return TRUE;
+		$rowcnt = mysql_num_rows($result);
+		if (! $rowcnt)
+		{
+			return $rowcnt;
+		} else {
+			//MD5衝突しない前提で、1行
+			$row = mysql_fetch_assoc($result);
+			$rec["flag"] = $row["flag"];
+			$rec["ins_date"] = $row["ins_date"];
+			$rec["shot_date"] = $row["shot_date"];
+			$rec["url"] = $row["url"];
+			return TRUE;
+		}
 	}
 	
 }//SearchShotDbFromMd5
