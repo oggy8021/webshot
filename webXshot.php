@@ -72,22 +72,25 @@ function webXshot ($url)
 		if (0 === $rec["flag"])
 		{
 			//urlに対応する画像が無い
-			printf ("<img src=\"%s/nowp.png\" ALT=\"Now Printing ... \" TITLE=\"\" /><BR>\n", $apdir);
+			$imgString = sprintf ("<img src=\"%s/nowp.png\" ALT=\"Now Printing ... \" TITLE=\"Now Printing ... \" class=\"aligncenter\" />\n", $apdir);
 		} else {
 			//urlに対応する画像がある
-			printf ("<img src=\"%s/%s.png\" ALT=\"%s\" TITLE=\"%s\" /><BR>\n", $cachedir, $md5url,  $rec["url"],  $rec["url"]);
+			$imgString = sprintf ("<img src=\"%s/%s.png\" ALT=\"%s\" TITLE=\"%s\" class=\"aligncenter\" />\n", $cachedir, $md5url, $rec["url"], $rec["url"]);
 		}
 	}
-	
 	CloseShotDb();
-}
+	
+	return $imgString;
+	
+}//webXshot
 
 function isUrl($text) {
-    if (preg_match('/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/', $text)) {
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-}
+	if (preg_match('/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/', $text)) {
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+
+}//isUrl
 
 ?>
