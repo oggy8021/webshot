@@ -1,4 +1,4 @@
-<?php 
+ï»¿<?php 
 
 // shotdb.php
 
@@ -15,7 +15,7 @@ function ConnectShotDb() {
 	$db_ident = '';
 
 	// TODO
-	//   wordpressÝ’èƒtƒ@ƒCƒ‹‚É‚ ‚é‚Ì‚Æ“¯‚¶
+	//   wordpressè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚ã‚‹ã®ã¨åŒã˜
 	$con = mysql_connect ($hostname, $dbuser, $db_ident);
 	if (FALSE === $con)
 	{
@@ -55,7 +55,7 @@ function SearchShotTabFromMd5($md5, &$rec) {
 		{
 			return $rowcnt;
 		} else {
-			//MD5Õ“Ë‚µ‚È‚¢‘O’ñ‚ÅA1s
+			//MD5è¡çªã—ãªã„å‰æã§ã€1è¡Œ
 			$row = mysql_fetch_assoc($result);
 			$rec["flag"] = $row["flag"];
 			$rec["ins_date"] = $row["ins_date"];
@@ -81,7 +81,7 @@ function SearchShotTabGetFlag() {
 	{
 		$rowcnt = mysql_num_rows($result);
 
-		//resultset‰Šú‰»
+		//resultsetåˆæœŸåŒ–
 		if (0 === $rowcnt)
 		{
 			return 0;
@@ -119,7 +119,7 @@ function SearchShotTabGetFlag() {
 function InsertShotTab($md5, $url) {
 	global $con;
 
-	$flag = 0;	//–¢Žæ“¾
+	$flag = 0;	//æœªå–å¾—
 
 	$result = mysql_query("INSERT INTO shottab(md5, flag, ins_date, url) VALUES ('$md5', $flag, now(), '$url' )", $con);
 	if (FALSE === $result)

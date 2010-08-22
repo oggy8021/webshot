@@ -1,9 +1,9 @@
-<?php
+ï»¿<?php
 
 //crawler.php
 // TODO:
-//	ŒÃ‚¢ƒXƒiƒbƒvƒVƒ‡ƒbƒg‚ğÄæ“¾‚·‚é
-//	ŠÂ‹«•Ï”ƒ`ƒFƒbƒN
+//	å¤ã„ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆã‚’å†å–å¾—ã™ã‚‹
+//	ç’°å¢ƒå¤‰æ•°ãƒã‚§ãƒƒã‚¯
 
 require_once 'debug.php';
 require_once 'shotdb.php';
@@ -22,33 +22,33 @@ if ("" === getenv('DISPLAY') )
 	debugCon("Setting ENV{DISPLAY} = " . getenv('DISPLAY'));
 }
 
-//db‚ª‘¶İ‚·‚é‚©ƒ`ƒFƒbƒN
+//dbãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 if (FALSE === ConnectShotDb() )
 {
-	//db‚ª‘¶İ‚µ‚È‚¢
-	//db‚ğì‚é
+	//dbãŒå­˜åœ¨ã—ãªã„
+	//dbã‚’ä½œã‚‹
 	//create_db
 	debugCon ('Nothing ShotDb');
 	return FALSE;
 
 }
 
-//table‚ª‘¶İ‚·‚é‚©ƒ`ƒFƒbƒN
+//tableãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 if (FALSE === EnableShotTab() )
 {
-	//table‚ª‘¶İ‚µ‚È‚¢
-	//table‚ğì‚é
+	//tableãŒå­˜åœ¨ã—ãªã„
+	//tableã‚’ä½œã‚‹
 	//create_table
 	debugCon ('Nothing ShotTab');
 	return FALSE;
 
 } else {
 
-	//‰¼‘z‰æ–Ê‚ÅFirefox‚ğ‹N“®‚·‚é
+	//ä»®æƒ³ç”»é¢ã§Firefoxã‚’èµ·å‹•ã™ã‚‹
 	$cmd = '/bin/ps -ef | grep "/usr/lib/firefox" | grep "display :5" | grep -v "grep" | grep -v "/bin/sh" | wc -l';
 	$lastcon = exec($cmd, $ret);
-//	debugCon($cmd);
-//	debugCon($lastcon);
+	debugCon($cmd);
+	debugCon($lastcon);
 	if (0 === $lastcon)
 	{
 		$cmd = $firefox . ' -UILocale ja -display ' . $display . ' -width 800 -height 600 -p "' . $profile . '" >/dev/null &';
@@ -71,7 +71,7 @@ if (FALSE === EnableShotTab() )
 		{
 			//print $rec["md5"] . $rec["flag"] . $rec["ins_date"] . $rec["shot_date"] . $rec["url"] . "\n";
 
-			//‘ÎÛ‚ÌURL‚ÉƒAƒNƒZƒX‚·‚é
+			//å¯¾è±¡ã®URLã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹
 			$cmd = $firefox .' -display ' . $display . ' -remote "openurl(' . $rec["url"] . ')" >/dev/null &';
 			$lastcon = exec($cmd, $ret);
 			if (FALSE === $ret)
@@ -82,7 +82,7 @@ if (FALSE === EnableShotTab() )
 				sleep(10);
 			}
 
-			//ImageMagick‚ÅƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg‚ğB‚é
+			//ImageMagickã§ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚·ãƒ§ãƒƒãƒˆã‚’æ’®ã‚‹
 			$imgpath = $cachedir . '/' . $rec["md5"] . '.png';
 			$cmd = $import .' -display ' . $display . ' -window root ' . $imgpath;
 			$lastcon = exec($cmd, $ret);
@@ -92,7 +92,7 @@ if (FALSE === EnableShotTab() )
 			}
 			debugCon("Success ... Snapshot");
 
-			//B‚Á‚½‰æ‘œ‚ğ‰ÁHik¬/Šp›/‰ej‚·‚é
+			//æ’®ã£ãŸç”»åƒã‚’åŠ å·¥ï¼ˆç¸®å°/è§’â—‹/å½±ï¼‰ã™ã‚‹
 			$shotimg = new Imagick();
 			$shotimg->readImage($imgpath);
 			$shotimg->thumbnailImage(200, 150);
@@ -107,7 +107,7 @@ if (FALSE === EnableShotTab() )
 			$shadow->destroy();
 			debugCon("Success ... Image Convert");
 
-			//shotdbXV
+			//shotdbæ›´æ–°
 			if (FALSE === UpdateShotTab($rec["md5"]) )
 			{
 				debugCon ('Failed to update ShotTab');
