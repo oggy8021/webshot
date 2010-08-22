@@ -12,11 +12,11 @@
 require 'debug.php';
 require 'shotdb.php';
 
-function webXshot ($url) 
+function webXshot ($url, $note) 
 {
 	$ret = null;
 	$apdir = 'http://oggy.no-ip.info/blog/wp-content/plugins/webXshot';
-	$cachedir = 'http://oggy.no-ip.info/blog/wp-content/plugins/webXshot/cache';
+	$cachedir = $apdir . '/cache';
 
 	//入力値チェック
 	$url = str_replace("\0", "", $url);
@@ -66,17 +66,27 @@ function webXshot ($url)
 				debugHtml("Failed InsertShotTab");
 				return FALSE;
 			}
-		} 
+		}
 
+		$imgString = '<p>';
+		$imgString .= '<a href="' . $rec["url"] . '" target="_blank">';
 		//urlに対応するレコードがあった
 		if (0 === $rec["flag"])
 		{
 			//urlに対応する画像が無い
-			$imgString = sprintf ("<img src=\"%s/nowp.png\" ALT=\"Now Printing ... \" TITLE=\"Now Printing ... \" class=\"aligncenter\" />\n", $apdir);
+			$imgString .= sprintf ("<img src=\"%s/nowp.png\" ALT=\"Now Printing ... \" TITLE=\"Now Printing ... \" class=\"alignleft\" /></a>", $apdir);
 		} else {
 			//urlに対応する画像がある
-			$imgString = sprintf ("<img src=\"%s/%s.png\" ALT=\"%s\" TITLE=\"%s\" class=\"aligncenter\" />\n", $cachedir, $md5url, $rec["url"], $rec["url"]);
+			$imgString .= sprintf ("<img src=\"%s/%s.png\" ALT=\"%s\" TITLE=\"%s\" class=\"alignleft\" /></a>", $cachedir, $md5url, $rec["url"], $rec["url"]);
 		}
+		
+		if ("" !== $note)
+		{
+			$imgString .= '<br />' . $note . '<br />';
+		}
+		//回り込み解除がカッコワルイ
+		$imgString .= '</p><p class="clear"></p>';
+		
 	}
 	CloseShotDb();
 	
