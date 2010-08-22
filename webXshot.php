@@ -74,10 +74,10 @@ function webXshot ($url, $note)
 		if (0 === $rec["flag"])
 		{
 			//urlに対応する画像が無い
-			$imgString .= sprintf ("<img src=\"%s/nowp.png\" ALT=\"Now Printing ... \" TITLE=\"Now Printing ... \" class=\"alignleft\" /></a>", $apdir);
+			$imgString .= sprintf ("<img src=\"%s/nowp.png\" alt=\"NowPrinting\" title=\"NowPrinting\" class=\"alignleft\" /></a>", $apdir);
 		} else {
 			//urlに対応する画像がある
-			$imgString .= sprintf ("<img src=\"%s/%s.png\" ALT=\"%s\" TITLE=\"%s\" class=\"alignleft\" /></a>", $cachedir, $md5url, $rec["url"], $rec["url"]);
+			$imgString .= sprintf ("<img src=\"%s/%s.png\" alt=\"%s\" title=\"%s\" class=\"alignleft\" /></a>", $cachedir, $md5url, $rec["url"], $rec["url"]);
 		}
 		
 		if ("" !== $note)
