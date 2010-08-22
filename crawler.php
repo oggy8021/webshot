@@ -5,8 +5,8 @@
 //	古いスナップショットを再取得する
 //	環境変数チェック
 
-require 'debug.php';
-require 'shotdb.php';
+require_once 'debug.php';
+require_once 'shotdb.php';
 
 $display = ':5';
 $profile = 'webshot';

@@ -9,8 +9,8 @@
 	Author URI: http://oggy.no-ip.info/blog/
  */
 
-require 'debug.php';
-require 'shotdb.php';
+require_once 'debug.php';
+require_once 'shotdb.php';
 
 function webXshot ($url, $note) 
 {
