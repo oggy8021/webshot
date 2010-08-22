@@ -47,9 +47,9 @@ if (FALSE === EnableShotTab() )
 	//仮想画面でFirefoxを起動する
 	$cmd = '/bin/ps -ef | grep "/usr/lib/firefox" | grep "display :5" | grep -v "grep" | grep -v "/bin/sh" | wc -l';
 	$lastcon = exec($cmd, $ret);
-	debugCon($cmd);
-	debugCon($lastcon);
-	if (0 === $lastcon)
+//	debugCon($cmd);
+//	debugCon($lastcon);
+	if (0 == $lastcon)
 	{
 		$cmd = $firefox . ' -UILocale ja -display ' . $display . ' -width 800 -height 600 -p "' . $profile . '" >/dev/null &';
 		passthru($cmd, $ret);
