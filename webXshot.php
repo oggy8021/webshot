@@ -69,7 +69,7 @@ function webXshot ($url, $note)
 		}
 
 		$imgString = '<p>';
-		$imgString .= '<a href="' . $rec["url"] . '" target="_blank">';
+		$imgString .= '<a href="' . $url . '" target="_blank">';
 		//urlに対応するレコードがあった
 		if (0 === $rec["flag"])
 		{
