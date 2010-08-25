@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 //crawler.php
 // TODO:
