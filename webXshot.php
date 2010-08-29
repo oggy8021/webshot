@@ -12,7 +12,7 @@
 require_once 'debug.php';
 require_once 'shotdb.php';
 
-function webXshot ($url, $note) 
+function webXshot ($url, $title, $note) 
 {
 	$ret = null;
 	$apdir = 'http://oggy.no-ip.info/blog/wp-content/plugins/webXshot';
@@ -74,16 +74,24 @@ function webXshot ($url, $note)
 		if (0 === $rec["flag"])
 		{
 			//urlに対応する画像が無い
-			$imgString .= sprintf ("<img src=\"%s/nowp.png\" alt=\"NowPrinting\" title=\"NowPrinting\" class=\"alignleft\" /></a>", $apdir);
+			$imgString .= sprintf ("<img src=\"%s/nowp.png\" alt=\"NowPrinting\" title=\"NowPrinting\" class=\"alignleft\" />", $apdir);
 		} else {
 			//urlに対応する画像がある
-			$imgString .= sprintf ("<img src=\"%s/%s.png\" alt=\"%s\" title=\"%s\" class=\"alignleft\" /></a>", $cachedir, $md5url, $rec["url"], $rec["url"]);
+			$imgString .= sprintf ("<img src=\"%s/%s.png\" alt=\"%s\" title=\"%s\" class=\"alignleft\" />", $cachedir, $md5url, $rec["url"], $rec["url"]);
 		}
 		
-		if ("" !== $note)
+		if ("" != $title)
 		{
-			$imgString .= '<br />' . $note . '<br />';
+			$imgString .= '<br />' . $title . '</a><br />';
+		} else {
+			$imgString .= '</a><br />';
 		}
+
+		if ("" != $note)
+		{
+			$imgString .= $note . '<br />';
+		}
+
 		//回り込み解除がカッコワルイ
 		$imgString .= '</p><p class="clear"></p>';
 		
