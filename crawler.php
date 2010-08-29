@@ -5,7 +5,7 @@
 //	古いスナップショットを再取得する
 //	環境変数チェック
 
-require_once 'debug.php';
+require_once 'debuggy.php';
 require_once 'shotdb.php';
 
 $display = ':5';

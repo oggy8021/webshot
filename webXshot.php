@@ -9,7 +9,7 @@
 	Author URI: http://oggy.no-ip.info/blog/
  */
 
-require_once 'debug.php';
+require_once 'debuggy.php';
 require_once 'shotdb.php';
 
 function webXshot ($url, $title, $note) 
