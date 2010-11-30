@@ -22,7 +22,7 @@ function webXshot ($url, $title, $note)
 	$url = str_replace("\0", "", $url);
 	if (! isUrl($url) )
 	{
-		debugHtml("不正なURLです");
+		debugHtml("不正なURLです $url");
 		return FALSE;
 	}
 
