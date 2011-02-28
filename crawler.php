@@ -61,7 +61,7 @@ if (FALSE === EnableShotTab() )
 			return FALSE;
 		}
 	}
-	debugCon('Firefox is already running');
+//	debugCon('Firefox is already running');
 
 	$resultset = SearchShotTabGetFlag();
 	if (0 < $resultset)
@@ -78,9 +78,12 @@ if (FALSE === EnableShotTab() )
 			{
 				debugCon('Failed Open Url (url = ' . $rec["url"] . ')');
 			} else {
-				debugCon("URL opening ... Firefox");
+				debugCon('Success Open Url (url = ' . $rec["url"] . ')');
 				sleep(10);
 			}
+
+			//描画完を待つ
+			sleep(10);
 
 			//ImageMagickでスクリーンショットを撮る
 			$imgpath = $cachedir . '/' . $rec["md5"] . '.png';
