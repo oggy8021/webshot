@@ -7,7 +7,9 @@ function debugHtml ($val)
 
 function debugCon ($val)
 {
-	print "[debug] :$val.\n";
+	$today  = date("Y/m/d H:i:s");
+
+	print "$today [debug] :$val.\n";
 }
 
 ?>
