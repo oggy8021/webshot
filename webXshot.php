@@ -4,7 +4,7 @@
 	Plugin Name: webXshot
 	Plugin URI: http://oggy.no-ip.info/blog/
 	Description: Snapshot to Web site. [Xvfb + Firefox + ImageMagick(Imagick)]
-	Version: 1.0
+	Version: 1.1
 	Author: oggy
 	Author URI: http://oggy.no-ip.info/blog/
  */
@@ -110,5 +110,16 @@ function isUrl($text) {
 	}
 
 }//isUrl
+
+function webXshot_handler( $atts, $content = null ) {
+        extract( shortcode_atts ( array (
+                'title' => '',
+                'note' => '',
+        ), $atts ) );
+        return  webXshot($content, $title, $note);
+}
+
+add_shortcode('webshot', 'webXshot_handler');
+
 
 ?>
