@@ -51,10 +51,11 @@ if (FALSE === EnableShotTab() )
 //	debugCon($lastcon);
 	if (0 == $lastcon)
 	{
+		set_time_limit(30);
 		$cmd = $firefox . ' -UILocale ja -display ' . $display . ' -width 800 -height 600 -p "' . $profile . '" >/dev/null &';
 		passthru($cmd, $ret);
+//		sleep(30);
 		debugCon("Starting ... Firefox");
-		sleep(15);
 		if (FALSE === $ret)
 		{
 			debugCon("Failed Running Firefox (ret = $ret)");
@@ -72,18 +73,19 @@ if (FALSE === EnableShotTab() )
 			//print $rec["md5"] . $rec["flag"] . $rec["ins_date"] . $rec["shot_date"] . $rec["url"] . "\n";
 
 			//対象のURLにアクセスする
+			set_time_limit(10);
 			$cmd = $firefox .' -display ' . $display . ' -remote "openurl(' . $rec["url"] . ')" >/dev/null &';
 			$lastcon = exec($cmd, $ret);
 			if (FALSE === $ret)
 			{
 				debugCon('Failed Open Url (url = ' . $rec["url"] . ')');
 			} else {
+//				sleep(10);
 				debugCon('Success Open Url (url = ' . $rec["url"] . ')');
-				sleep(10);
 			}
 
 			//描画完を待つ
-			sleep(10);
+//			sleep(10);
 
 			//ImageMagickでスクリーンショットを撮る
 			$imgpath = $cachedir . '/' . $rec["md5"] . '.png';
