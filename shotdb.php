@@ -55,7 +55,7 @@ function SearchShotTabFromMd5($md5, &$rec) {
 		{
 			return $rowcnt;
 		} else {
-			//MD5衝突しない前提で、1行
+			//MD5衝突しない前提で、1行しか戻らない
 			$row = mysql_fetch_assoc($result);
 			$rec["flag"] = $row["flag"];
 			$rec["ins_date"] = $row["ins_date"];
@@ -69,7 +69,7 @@ function SearchShotTabFromMd5($md5, &$rec) {
 		return FALSE;
 
 	}
-	
+
 }//SearchShotDbFromMd5
 
 
@@ -89,7 +89,7 @@ function SearchShotTabGetFlag() {
 			$cnt = 0;
 			while ($cnt < $rowcnt)
 			{
-				$resultset[$cnt] = array("md5" => "", "flag" => 0, "ins_date" => 0, "shot_date" => 0, "url" => "");
+				$resultset["$cnt"] = array("md5" => "", "flag" => 0, "ins_date" => 0, "shot_date" => 0, "url" => "");
 				$cnt++;
 			}
 		}
