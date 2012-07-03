@@ -45,7 +45,7 @@ if (FALSE === EnableShotTab() )
 } else {
 
 	//仮想画面でFirefoxを起動する
-	$cmd = '/bin/ps -ef | grep "/usr/lib/firefox" | grep "display :5" | grep -v "grep" | grep -v "/bin/sh" | wc -l';
+	$cmd = '/bin/ps -ef | grep "/usr/lib64/firefox" | grep "display :5" | grep -v "grep" | grep -v "/bin/sh" | wc -l';
 	$lastcon = exec($cmd, $ret);
 //	debugCon($cmd);
 //	debugCon($lastcon);
@@ -99,7 +99,7 @@ if (FALSE === EnableShotTab() )
 			$shotimg = new Imagick();
 			$shotimg->readImage($imgpath);
 			$shotimg->thumbnailImage(200, 150);
-			$shotimg->roundCorners(5, 5);
+#			$shotimg->roundCorners(5, 5);
 			$shadow = $shotimg->clone();
 			$shadow->setImageBackgroundColor( new ImagickPixel('black') );
 			$shadow->shadowImage(80, 3, 5, 5);
