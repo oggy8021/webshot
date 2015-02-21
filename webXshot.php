@@ -15,7 +15,7 @@ require_once 'shotdb.php';
 function webXshot ($url, $title, $note) 
 {
 	$ret = null;
-	$apdir = 'http://oggy.no-ip.info/blog/wp-content/plugins/webXshot';
+	$apdir = WP_PLUGIN_URL . '/webXshot';
 	$cachedir = $apdir . '/cache';
 
 	//入力値チェック
